@@ -1,503 +1,3143 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
-<link rel="icon" type="image/png" href="MamadCraftSMP.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mamad Craft SMP</title>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+    <meta charset="UTF-8">
 
-html{
-  scroll-behavior:smooth;
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-body{
-  font-family:Tahoma,Arial,sans-serif;
-  background:#050805;
-  color:white;
-  overflow-x:hidden;
-}
+    <title>Mamad Craft SMP | سرور ماینکرفت</title>
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background:
-    linear-gradient(rgba(40,255,100,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(40,255,100,.035) 1px,transparent 1px);
-  background-size:45px 45px;
-  animation:gridMove 12s linear infinite;
-}
+    <meta
+        name="description"
+        content="Mamad Craft SMP - یک سرور ماینکرفتی دوستانه، جذاب و خفن"
+    >
 
-@keyframes gridMove{
-  from{background-position:0 0}
-  to{background-position:45px 45px}
-}
+    <meta name="theme-color" content="#00ff66">
 
-header{
-  min-height:75vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:50px 20px;
-}
+    <link
+        rel="icon"
+        type="image/png"
+        href="MamadCraftSMP.png"
+    >
 
-.crown{
-  font-size:85px;
-  animation:float 2.5s ease-in-out infinite;
-}
+    <style>
 
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
-}
+        /* =========================================================
+           RESET
+        ========================================================= */
 
-h1{
-  font-size:55px;
-  color:#39ff75;
-  text-shadow:0 0 25px rgba(57,255,117,.5);
-  margin:15px 0;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.subtitle{
-  color:#b8c7bc;
-  font-size:19px;
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-.container{
-  width:min(900px,92%);
-  margin:auto;
-}
+        body {
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
 
-.card{
-  background:rgba(8,18,10,.92);
-  border:1px solid rgba(57,255,117,.25);
-  border-radius:20px;
-  padding:32px;
-  margin:35px 0;
-  box-shadow:0 0 30px rgba(0,255,80,.06);
-  transition:.25s;
-}
+            background:
+                #020604;
 
-.card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(57,255,117,.55);
-}
+            color:
+                #ffffff;
 
-.card h2{
-  color:#39ff75;
-  margin-bottom:20px;
-  font-size:25px;
-}
+            overflow-x: hidden;
 
-.card p{
-  line-height:2;
-  color:#d0dbd3;
-}
+            min-height: 100vh;
+        }
 
-.status{
-  text-align:center;
-  padding:25px;
-  border-radius:15px;
-  background:#020402;
-}
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-.dot{
-  width:14px;
-  height:14px;
-  display:inline-block;
-  border-radius:50%;
-  background:#777;
-  margin-left:8px;
-}
+        button {
+            font-family: inherit;
+        }
 
-.online{
-  background:#39ff75;
-  box-shadow:0 0 15px #39ff75;
-}
 
-.offline{
-  background:#ff3b3b;
-  box-shadow:0 0 15px #ff3b3b;
-}
+        /* =========================================================
+           BACKGROUND
+        ========================================================= */
 
-.unknown{
-  background:#ffd43b;
-  box-shadow:0 0 15px #ffd43b;
-}
+        body::before {
+            content: "";
 
-#statusText{
-  font-size:22px;
-}
+            position: fixed;
 
-#players{
-  display:block;
-  margin-top:12px;
-  color:#b8c7bc;
-}
+            inset: 0;
 
-#lastCheck{
-  font-size:12px;
-  color:#66736a;
-  margin-top:10px;
-}
+            pointer-events: none;
 
-.ip{
-  background:#020402;
-  border:1px solid #18351f;
-  padding:17px;
-  border-radius:12px;
-  text-align:center;
-  direction:ltr;
-  font-family:monospace;
-  font-size:17px;
-  margin:15px 0;
-}
+            z-index: -10;
 
-button{
-  width:100%;
-  border:0;
-  border-radius:12px;
-  padding:15px;
-  background:#39ff75;
-  color:#031006;
-  font-weight:bold;
-  font-size:16px;
-  cursor:pointer;
-  transition:.2s;
-}
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(0, 255, 102, 0.12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(0, 255, 102, 0.08),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(0, 255, 102, 0.05),
+                    transparent 25%
+                );
+        }
 
-button:hover{
-  transform:scale(1.02);
-  box-shadow:0 0 20px rgba(57,255,117,.35);
-}
 
-.info-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
+        .background-grid {
 
-.info{
-  background:#020402;
-  border:1px solid #18351f;
-  border-radius:15px;
-  padding:25px 15px;
-  text-align:center;
-}
+            position: fixed;
 
-.info .icon{
-  font-size:35px;
-  margin-bottom:10px;
-}
+            inset: 0;
 
-.info h3{
-  color:#39ff75;
-  margin-bottom:8px;
-}
+            z-index: -9;
 
-.info p{
-  font-size:14px;
-}
+            pointer-events: none;
 
-.rules{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+            opacity: 0.16;
 
-.rule{
-  background:#020402;
-  border-radius:12px;
-  padding:15px;
-  border-right:3px solid #39ff75;
-}
+            background-image:
+                linear-gradient(
+                    rgba(0, 255, 102, 0.13) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(0, 255, 102, 0.13) 1px,
+                    transparent 1px
+                );
 
-.rank{
-  padding:18px;
-  margin:12px 0;
-  background:#020402;
-  border-radius:12px;
-}
+            background-size: 55px 55px;
 
-.rank strong{
-  color:#39ff75;
-}
+            animation:
+                gridMove 18s linear infinite;
+        }
 
-.social{
-  text-align:center;
-}
+        @keyframes gridMove {
 
-.social a{
-  display:inline-block;
-  margin-top:15px;
-  padding:14px 25px;
-  border-radius:12px;
-  background:#39ff75;
-  color:#031006;
-  text-decoration:none;
-  font-weight:bold;
-}
+            from {
+                transform: translate(0, 0);
+            }
 
-.big-space{
-  height:120px;
-}
+            to {
+                transform: translate(55px, 55px);
+            }
+        }
 
-footer{
-  margin-top:80px;
-  padding:45px 20px;
-  text-align:center;
-  color:#66736a;
-  border-top:1px solid rgba(57,255,117,.12);
-}
 
-@media(max-width:650px){
-  h1{
-    font-size:38px;
-  }
+        /* =========================================================
+           PARTICLES
+        ========================================================= */
 
-  .crown{
-    font-size:65px;
-  }
+        .particles {
+            position: fixed;
 
-  .info-grid{
-    grid-template-columns:1fr;
-  }
+            inset: 0;
 
-  header{
-    min-height:65vh;
-  }
-}
-</style>
+            pointer-events: none;
+
+            z-index: -5;
+
+            overflow: hidden;
+        }
+
+        .particle {
+
+            position: absolute;
+
+            width: 4px;
+
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: #00ff66;
+
+            box-shadow:
+                0 0 8px #00ff66,
+                0 0 18px rgba(0, 255, 102, 0.5);
+
+            opacity: 0.7;
+
+            animation:
+                particleFloat linear infinite;
+        }
+
+        .particle:nth-child(1) {
+            left: 4%;
+            top: 90%;
+            animation-duration: 8s;
+            animation-delay: -2s;
+        }
+
+        .particle:nth-child(2) {
+            left: 12%;
+            top: 70%;
+            animation-duration: 11s;
+            animation-delay: -5s;
+        }
+
+        .particle:nth-child(3) {
+            left: 21%;
+            top: 95%;
+            animation-duration: 9s;
+            animation-delay: -3s;
+        }
+
+        .particle:nth-child(4) {
+            left: 31%;
+            top: 80%;
+            animation-duration: 13s;
+            animation-delay: -8s;
+        }
+
+        .particle:nth-child(5) {
+            left: 42%;
+            top: 93%;
+            animation-duration: 10s;
+            animation-delay: -4s;
+        }
+
+        .particle:nth-child(6) {
+            left: 53%;
+            top: 85%;
+            animation-duration: 14s;
+            animation-delay: -10s;
+        }
+
+        .particle:nth-child(7) {
+            left: 64%;
+            top: 96%;
+            animation-duration: 9s;
+            animation-delay: -6s;
+        }
+
+        .particle:nth-child(8) {
+            left: 74%;
+            top: 75%;
+            animation-duration: 12s;
+            animation-delay: -7s;
+        }
+
+        .particle:nth-child(9) {
+            left: 84%;
+            top: 91%;
+            animation-duration: 10s;
+            animation-delay: -1s;
+        }
+
+        .particle:nth-child(10) {
+            left: 94%;
+            top: 78%;
+            animation-duration: 15s;
+            animation-delay: -9s;
+        }
+
+        @keyframes particleFloat {
+
+            0% {
+                transform:
+                    translateY(80px)
+                    translateX(0)
+                    scale(0.5);
+
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 0.8;
+            }
+
+            50% {
+                transform:
+                    translateY(-45vh)
+                    translateX(35px)
+                    scale(1);
+            }
+
+            85% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform:
+                    translateY(-110vh)
+                    translateX(-20px)
+                    scale(0.2);
+
+                opacity: 0;
+            }
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        header {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            background:
+                rgba(1, 7, 4, 0.78);
+
+            border-bottom:
+                1px solid rgba(0, 255, 102, 0.14);
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .header-inner {
+
+            width: min(
+                1200px,
+                calc(100% - 35px)
+            );
+
+            margin: auto;
+
+            min-height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            font-weight: 900;
+
+            font-size: 20px;
+
+            color: #ffffff;
+        }
+
+        .logo-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #00ff66,
+                    #006b32
+                );
+
+            box-shadow:
+                0 0 20px rgba(0, 255, 102, 0.28);
+
+            font-size: 22px;
+
+            animation:
+                logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(4deg) scale(1.06);
+            }
+        }
+
+        nav {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+        nav a {
+
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            color: #b9c8bf;
+
+            font-size: 14px;
+
+            transition:
+                0.25s ease;
+        }
+
+        nav a:hover {
+
+            color: #ffffff;
+
+            background:
+                rgba(0, 255, 102, 0.09);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+
+            width: min(
+                1200px,
+                calc(100% - 35px)
+            );
+
+            margin: auto;
+
+            min-height: 760px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            position: relative;
+
+            padding: 90px 0;
+        }
+
+        .hero-content {
+
+            max-width: 850px;
+
+            animation:
+                heroIn 1.1s ease both;
+        }
+
+        @keyframes heroIn {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(35px)
+                    scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        .crown {
+
+            font-size: 80px;
+
+            display: inline-block;
+
+            filter:
+                drop-shadow(
+                    0 0 20px
+                    rgba(0, 255, 102, 0.35)
+                );
+
+            animation:
+                crownFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes crownFloat {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0)
+                    rotate(-2deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-13px)
+                    rotate(2deg);
+            }
+        }
+
+        .badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin:
+                25px 0 18px;
+
+            padding:
+                8px 15px;
+
+            border:
+                1px solid
+                rgba(0, 255, 102, 0.3);
+
+            border-radius: 999px;
+
+            background:
+                rgba(0, 255, 102, 0.06);
+
+            color: #7dffac;
+
+            font-size: 13px;
+
+            box-shadow:
+                0 0 20px
+                rgba(0, 255, 102, 0.05);
+        }
+
+        .badge-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            background: #00ff66;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 10px #00ff66;
+
+            animation:
+                blink 1.4s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        h1 {
+
+            font-size:
+                clamp(
+                    45px,
+                    8vw,
+                    92px
+                );
+
+            line-height: 1;
+
+            letter-spacing: -3px;
+
+            font-weight: 1000;
+
+            color: #ffffff;
+
+            text-shadow:
+                0 0 20px
+                rgba(0, 255, 102, 0.16);
+        }
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00ff66,
+                    #7dffad,
+                    #00d957,
+                    #00ff66
+                );
+
+            background-size: 300% auto;
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+
+            animation:
+                gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+
+            to {
+                background-position:
+                    300% center;
+            }
+        }
+
+        .hero-description {
+
+            margin:
+                28px auto 0;
+
+            max-width: 700px;
+
+            color: #aabbb1;
+
+            font-size: 18px;
+
+            line-height: 2;
+        }
+
+        .hero-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+
+            margin-top: 35px;
+        }
+
+        .btn {
+
+            position: relative;
+
+            overflow: hidden;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            padding:
+                14px 23px;
+
+            border-radius: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            border: 1px solid
+                rgba(0, 255, 102, 0.28);
+
+            transition:
+                0.25s ease;
+
+            min-width: 150px;
+        }
+
+        .btn::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: -120%;
+
+            width: 100%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.16),
+                    transparent
+                );
+
+            transform:
+                skewX(-20deg);
+
+            transition:
+                0.6s;
+        }
+
+        .btn:hover::before {
+            left: 120%;
+        }
+
+        .btn:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 255, 102, 0.12);
+        }
+
+        .btn-primary {
+
+            color: #001b0a;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00ff66,
+                    #00d957
+                );
+        }
+
+        .btn-secondary {
+
+            color: #d7e7dd;
+
+            background:
+                rgba(255,255,255,0.035);
+        }
+
+
+        /* =========================================================
+           SERVER CARD
+        ========================================================= */
+
+        .server-card {
+
+            margin:
+                50px auto 0;
+
+            max-width: 800px;
+
+            padding: 22px;
+
+            border:
+                1px solid
+                rgba(0, 255, 102, 0.16);
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0,255,102,0.07),
+                    rgba(255,255,255,0.025)
+                );
+
+            box-shadow:
+                0 20px 70px
+                rgba(0,0,0,0.3);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .server-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            background:
+                rgba(0,255,102,0.1);
+
+            filter:
+                blur(60px);
+
+            border-radius: 50%;
+
+            top: -100px;
+
+            left: -100px;
+        }
+
+        .server-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .server-label {
+
+            color: #9fb0a6;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .server-ip {
+
+            direction: ltr;
+
+            font-family:
+                Consolas,
+                monospace;
+
+            color: #ffffff;
+
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+        .status-disabled {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                9px 12px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            color: #9cacA2;
+
+            font-size: 12px;
+        }
+
+        .status-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #777;
+        }
+
+
+        /* =========================================================
+           SECTIONS
+        ========================================================= */
+
+        section {
+
+            width: min(
+                1200px,
+                calc(100% - 35px)
+            );
+
+            margin:
+                0 auto;
+
+            padding:
+                110px 0;
+        }
+
+        .section-title {
+
+            text-align: center;
+
+            margin-bottom: 50px;
+        }
+
+        .section-kicker {
+
+            color: #00ff66;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+
+            font-size:
+                clamp(
+                    30px,
+                    5vw,
+                    48px
+                );
+
+            margin-bottom: 14px;
+        }
+
+        .section-title p {
+
+            max-width: 680px;
+
+            margin: auto;
+
+            color: #94a69b;
+
+            line-height: 1.9;
+        }
+
+
+        /* =========================================================
+           FEATURE CARDS
+        ========================================================= */
+
+        .features {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .feature-card {
+
+            position: relative;
+
+            padding: 30px;
+
+            min-height: 230px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.045),
+                    rgba(255,255,255,0.015)
+                );
+
+            transition:
+                transform .35s ease,
+                border-color .35s ease,
+                box-shadow .35s ease;
+
+            overflow: hidden;
+        }
+
+        .feature-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+
+            height: 130px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,255,102,0.08);
+
+            filter:
+                blur(35px);
+
+            bottom: -80px;
+
+            left: -50px;
+
+            transition:
+                .4s;
+        }
+
+        .feature-card:hover {
+
+            transform:
+                translateY(-9px);
+
+            border-color:
+                rgba(0,255,102,0.28);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.25),
+                0 0 35px
+                rgba(0,255,102,0.05);
+        }
+
+        .feature-card:hover::after {
+
+            transform:
+                scale(1.8);
+        }
+
+        .feature-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 16px;
+
+            background:
+                rgba(0,255,102,0.08);
+
+            border:
+                1px solid
+                rgba(0,255,102,0.15);
+
+            font-size: 26px;
+
+            margin-bottom: 20px;
+
+            transition:
+                .35s;
+        }
+
+        .feature-card:hover .feature-icon {
+
+            transform:
+                rotate(-7deg)
+                scale(1.08);
+
+            background:
+                rgba(0,255,102,0.13);
+        }
+
+        .feature-card h3 {
+
+            font-size: 20px;
+
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+
+            color: #8ea197;
+
+            line-height: 1.9;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+           BIG PANEL
+        ========================================================= */
+
+        .big-panel {
+
+            border:
+                1px solid
+                rgba(0,255,102,0.14);
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,255,102,0.07),
+                    rgba(255,255,255,0.025)
+                );
+
+            padding:
+                45px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .big-panel::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+
+            height: 350px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,255,102,0.08);
+
+            filter:
+                blur(70px);
+
+            top: -190px;
+
+            right: -100px;
+        }
+
+        .big-panel-content {
+
+            position: relative;
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr 1fr;
+
+            gap: 40px;
+
+            align-items: center;
+        }
+
+        .big-panel h3 {
+
+            font-size:
+                clamp(
+                    25px,
+                    4vw,
+                    38px
+                );
+
+            margin-bottom: 18px;
+        }
+
+        .big-panel p {
+
+            color: #9cafA4;
+
+            line-height: 2;
+
+            font-size: 15px;
+        }
+
+        .big-number {
+
+            font-size: 100px;
+
+            line-height: 1;
+
+            font-weight: 1000;
+
+            color: rgba(0,255,102,0.08);
+
+            text-align: center;
+
+            user-select: none;
+
+            animation:
+                numberFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes numberFloat {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-15px);
+            }
+        }
+
+
+        /* =========================================================
+           STEPS
+        ========================================================= */
+
+        .steps {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .step {
+
+            position: relative;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            transition:
+                .3s;
+        }
+
+        .step:hover {
+
+            transform:
+                translateY(-7px);
+
+            border-color:
+                rgba(0,255,102,0.25);
+        }
+
+        .step-number {
+
+            width: 45px;
+
+            height: 45px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                #00ff66;
+
+            color:
+                #001b0a;
+
+            font-weight: 1000;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 0 25px
+                rgba(0,255,102,0.15);
+        }
+
+        .step h3 {
+
+            margin-bottom: 12px;
+        }
+
+        .step p {
+
+            color: #8fa198;
+
+            line-height: 1.9;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+           RULES
+        ========================================================= */
+
+        .rules {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .rule {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            padding: 22px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            transition:
+                .3s;
+        }
+
+        .rule:hover {
+
+            transform:
+                translateX(-5px);
+
+            border-color:
+                rgba(0,255,102,0.22);
+
+            background:
+                rgba(0,255,102,0.035);
+        }
+
+        .rule-check {
+
+            flex: 0 0 auto;
+
+            width: 31px;
+
+            height: 31px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(0,255,102,0.1);
+
+            color:
+                #00ff66;
+
+            font-weight: 1000;
+        }
+
+        .rule strong {
+
+            display: block;
+
+            margin-bottom: 6px;
+        }
+
+        .rule span {
+
+            color: #87988f;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================================
+           JOIN
+        ========================================================= */
+
+        .join-box {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding:
+                65px 35px;
+
+            border-radius: 30px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(0,255,102,0.2);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,255,102,0.1),
+                    rgba(0,0,0,0.25)
+                );
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.25);
+        }
+
+        .join-box::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,255,102,0.1);
+
+            filter:
+                blur(80px);
+
+            top: -180px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+        }
+
+        .join-box > * {
+
+            position: relative;
+        }
+
+        .join-box h2 {
+
+            font-size:
+                clamp(
+                    30px,
+                    5vw,
+                    52px
+                );
+
+            margin-bottom: 15px;
+        }
+
+        .join-box p {
+
+            color: #9cafA5;
+
+            line-height: 1.9;
+
+            max-width: 650px;
+
+            margin:
+                0 auto 30px;
+        }
+
+        .ip-box {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            direction: ltr;
+
+            padding:
+                15px 20px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(0,0,0,0.3);
+
+            border:
+                1px solid
+                rgba(0,255,102,0.18);
+
+            font-family:
+                Consolas,
+                monospace;
+
+            font-size: 17px;
+
+            margin-bottom: 25px;
+        }
+
+        .ip-box span {
+
+            color:
+                #00ff66;
+        }
+
+
+        /* =========================================================
+           FAQ
+        ========================================================= */
+
+        .faq {
+
+            max-width: 850px;
+
+            margin: auto;
+
+            display: grid;
+
+            gap: 12px;
+        }
+
+        details {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            overflow: hidden;
+
+            transition:
+                .3s;
+        }
+
+        details[open] {
+
+            border-color:
+                rgba(0,255,102,0.22);
+
+            background:
+                rgba(0,255,102,0.035);
+        }
+
+        summary {
+
+            cursor: pointer;
+
+            padding: 20px;
+
+            font-weight: 800;
+
+            list-style: none;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+
+            content: "+";
+
+            color:
+                #00ff66;
+
+            font-size: 23px;
+
+            transition:
+                .25s;
+        }
+
+        details[open] summary::after {
+
+            content: "−";
+
+            transform:
+                rotate(180deg);
+        }
+
+        details p {
+
+            padding:
+                0 20px 22px;
+
+            color:
+                #899a90;
+
+            line-height: 1.9;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+           RUBIKA
+        ========================================================= */
+
+        .social-card {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            padding: 30px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            transition:
+                .3s;
+        }
+
+        .social-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(0,255,102,0.2);
+        }
+
+        .social-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+        }
+
+        .social-icon {
+
+            width: 55px;
+
+            height: 55px;
+
+            border-radius: 15px;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 25px;
+
+            background:
+                rgba(0,255,102,0.09);
+
+            border:
+                1px solid
+                rgba(0,255,102,0.15);
+        }
+
+        .social-info h3 {
+
+            margin-bottom: 5px;
+        }
+
+        .social-info p {
+
+            color:
+                #87998f;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+
+            width:
+                min(
+                    1200px,
+                    calc(100% - 35px)
+                );
+
+            margin:
+                0 auto;
+
+            padding:
+                35px 0 50px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer p {
+
+            color:
+                #66756d;
+
+            font-size: 13px;
+        }
+
+        .footer-brand {
+
+            color:
+                #00ff66;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           REVEAL
+        ========================================================= */
+
+        .reveal {
+
+            opacity: 0;
+
+            transform:
+                translateY(35px);
+
+            transition:
+                opacity .8s ease,
+                transform .8s ease;
+        }
+
+        .reveal.show {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =========================================================
+           TOP BUTTON
+        ========================================================= */
+
+        .top-button {
+
+            position: fixed;
+
+            left: 20px;
+
+            bottom: 20px;
+
+            width: 46px;
+
+            height: 46px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid
+                rgba(0,255,102,0.2);
+
+            background:
+                rgba(2,10,6,0.85);
+
+            color:
+                #00ff66;
+
+            display: grid;
+
+            place-items: center;
+
+            cursor: pointer;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform:
+                translateY(15px);
+
+            transition:
+                .3s;
+
+            z-index: 900;
+        }
+
+        .top-button.visible {
+
+            opacity: 1;
+
+            pointer-events: auto;
+
+            transform:
+                translateY(0);
+        }
+
+        .top-button:hover {
+
+            transform:
+                translateY(-5px);
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                min-height: 680px;
+            }
+
+            .features,
+            .steps {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .rules {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .big-panel-content {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .big-number {
+
+                font-size: 70px;
+            }
+
+            .social-card {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+            }
+
+        }
+
+        @media (max-width: 520px) {
+
+            .header-inner {
+
+                min-height:
+                    65px;
+            }
+
+            .logo {
+
+                font-size: 16px;
+            }
+
+            .logo-icon {
+
+                width: 38px;
+
+                height: 38px;
+            }
+
+            .hero {
+
+                padding:
+                    70px 0;
+            }
+
+            .crown {
+
+                font-size: 60px;
+            }
+
+            .hero-description {
+
+                font-size: 15px;
+            }
+
+            .btn {
+
+                width: 100%;
+            }
+
+            section {
+
+                padding:
+                    80px 0;
+            }
+
+            .big-panel {
+
+                padding:
+                    28px 20px;
+            }
+
+            .join-box {
+
+                padding:
+                    50px 20px;
+            }
+
+            .ip-box {
+
+                max-width: 100%;
+
+                font-size: 13px;
+
+                overflow:
+                    hidden;
+            }
+
+            .server-card {
+
+                padding:
+                    18px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<header>
-  <div class="crown">👑</div>
-  <h1>Mamad Craft SMP</h1>
-  <p class="subtitle">سرور ماینکرفت برای ماجراجویی، ساخت‌وساز و بازی با دوستان 🎮</p>
-</header>
 
-<main class="container">
+    <!-- =========================================================
+         BACKGROUND
+    ========================================================== -->
 
-  <section class="card">
-    <h2>🎮 وضعیت سرور</h2>
+    <div class="background-grid"></div>
 
-    <div class="status">
-      <span class="dot" id="statusDot"></span>
-      <span id="statusText">⏳ در حال بررسی...</span>
-      <span id="players"></span>
-      <div id="lastCheck">آخرین بررسی: —</div>
-    </div>
-  </section>
+    <div class="particles">
 
-  <section class="card">
-    <h2>🌐 اتصال به سرور</h2>
-
-    <div class="ip" id="serverIP">
-      mamadcraftsmp.aternos.me
-    </div>
-
-    <button onclick="copyIP()">📋 کپی آدرس سرور</button>
-  </section>
-
-  <section class="card">
-    <h2>⚔️ درباره سرور</h2>
-
-    <p>
-      به Mamad Craft SMP خوش اومدی! 👑
-      اینجا می‌تونی با دوستات وارد دنیای ماینکرفت بشی،
-      بسازی، ماجراجویی کنی و کلی اتفاق خفن رقم بزنی.
-    </p>
-  </section>
-
-  <section class="card">
-    <h2>✨ امکانات</h2>
-
-    <div class="info-grid">
-
-      <div class="info">
-        <div class="icon">🌍</div>
-        <h3>SMP</h3>
-        <p>دنیای بقا و ماجراجویی</p>
-      </div>
-
-      <div class="info">
-        <div class="icon">👥</div>
-        <h3>دوستان</h3>
-        <p>بازی با دوستان</p>
-      </div>
-
-      <div class="info">
-        <div class="icon">🏆</div>
-        <h3>رقابت</h3>
-        <p>رقابت و ساخت‌وساز</p>
-      </div>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
 
     </div>
-  </section>
 
-  <section class="card">
-    <h2>📜 قوانین سرور</h2>
 
-    <div class="rules">
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
-      <div class="rule">
-        🚫 خرابکاری و نابود کردن ساخته‌های دیگران ممنوع
-      </div>
+    <header>
 
-      <div class="rule">
-        🤝 با بازیکنان دیگر با احترام رفتار کنید
-      </div>
+        <div class="header-inner">
 
-      <div class="rule">
-        🏠 قبل از ساختن نزدیک خانه دیگران هماهنگ کنید
-      </div>
+            <a
+                href="#home"
+                class="logo"
+            >
 
-      <div class="rule">
-        ⚠️ از سوءاستفاده از باگ‌ها خودداری کنید
-      </div>
+                <div class="logo-icon">
+                    👑
+                </div>
 
-    </div>
-  </section>
+                <span>
+                    Mamad Craft SMP
+                </span>
 
-  <section class="card">
-    <h2>👑 رتبه‌ها</h2>
+            </a>
 
-    <div class="rank">
-      <strong>👑 OWNER</strong>
-      <p>مدیریت اصلی سرور</p>
-    </div>
 
-    <div class="rank">
-      <strong>🛡️ ADMIN</strong>
-      <p>مدیریت و کمک به بازیکنان</p>
-    </div>
+            <nav>
 
-    <div class="rank">
-      <strong>🎮 MEMBER</strong>
-      <p>بازیکنان معمولی سرور</p>
-    </div>
-  </section>
+                <a href="#home">
+                    خانه
+                </a>
 
-  <section class="card social">
-    <h2>💬 ارتباط با ما</h2>
+                <a href="#features">
+                    امکانات
+                </a>
 
-    <p>
-      برای اخبار و اتفاقات سرور می‌تونی به روبیکا سر بزنی.
-    </p>
+                <a href="#rules">
+                    قوانین
+                </a>
 
-    <a href="https://rubika.ir/joinc/FGABAJCA0DAKVOBPRVBXOMADGYOKACZG"
-       target="_blank">
-      💚 ورود به روبیکا
-    </a>
-  </section>
+                <a href="#faq">
+                    سوالات
+                </a>
 
-  <div class="big-space"></div>
+                <a href="#join">
+                    ورود به سرور
+                </a>
 
-</main>
+            </nav>
 
-<footer>
-  👑 Mamad Craft SMP
-  <br><br>
-  ساخته شده برای ممد و رفقا ❤️
-  <br><br>
-  © 2026 Mamad Craft SMP
-</footer>
+        </div>
 
-<script>
+    </header>
 
-const SERVER_IP = "mamadcraftsmp.aternos.me";
 
-async function checkServer(){
 
-  const dot = document.getElementById("statusDot");
-  const text = document.getElementById("statusText");
-  const players = document.getElementById("players");
-  const last = document.getElementById("lastCheck");
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
 
-  text.textContent = "⏳ در حال بررسی...";
-  players.textContent = "";
+    <main id="home">
 
-  try{
+        <div class="hero">
 
-    const response = await fetch(
-      "https://api.mcstatus.io/v2/status/java/" +
-      SERVER_IP +
-      "?timeout=5"
-    );
+            <div class="hero-content">
 
-    if(!response.ok){
-      throw new Error("API Error");
-    }
+                <div class="crown">
+                    👑
+                </div>
 
-    const data = await response.json();
+                <div class="badge">
 
-    if(data.online === true){
+                    <span class="badge-dot"></span>
 
-      dot.className = "dot online";
-      text.textContent = "🟢 ONLINE";
+                    Mamad Craft SMP
 
-      if(data.players){
+                </div>
 
-        const online = data.players.online ?? 0;
-        const max = data.players.max ?? "?";
+                <h1>
 
-        players.textContent =
-          "👥 " + online + " / " + max;
-      }
+                    <span class="gradient-text">
+                        Mamad Craft
+                    </span>
 
-    }else{
+                    <br>
 
-      dot.className = "dot offline";
-      text.textContent = "🔴 OFFLINE";
-      players.textContent = "👥 0";
+                    SMP
 
-    }
+                </h1>
 
-    last.textContent =
-      "آخرین بررسی: " +
-      new Date().toLocaleTimeString("fa-IR");
+                <p class="hero-description">
 
-  }catch(error){
+                    به دنیای
+                    <strong>Mamad Craft SMP</strong>
+                    خوش اومدی!
+                    <br>
 
-    dot.className = "dot unknown";
-    text.textContent = "🟡 خطا در بررسی";
+                    اینجا جاییه برای ساختن،
+                    ماجراجویی،
+                    بازی با دوستات
+                    و ساختن کلی خاطره خفن.
 
-    last.textContent =
-      "اتصال به سرویس بررسی وضعیت ناموفق بود.";
-  }
-}
+                </p>
 
-function copyIP(){
 
-  navigator.clipboard.writeText(SERVER_IP);
+                <div class="hero-buttons">
 
-  const button = document.querySelector("button");
-  const old = button.textContent;
+                    <a
+                        href="#join"
+                        class="btn btn-primary"
+                    >
+                        🎮 ورود به سرور
+                    </a>
 
-  button.textContent = "✅ کپی شد!";
+                    <a
+                        href="#features"
+                        class="btn btn-secondary"
+                    >
+                        ⚡ امکانات
+                    </a>
 
-  setTimeout(function(){
-    button.textContent = old;
-  },1500);
-}
+                </div>
 
-checkServer();
 
-setInterval(checkServer,30000);
+                <div class="server-card">
 
-</script>
+                    <div class="server-top">
+
+                        <div>
+
+                            <div class="server-label">
+                                آدرس سرور
+                            </div>
+
+                            <div class="server-ip">
+                                mamadcraftsmp.aternos.me
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-disabled">
+
+                            <span class="status-dot"></span>
+
+                            وضعیت آنلاین در این نسخه غیرفعال است
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             FEATURES
+        ====================================================== -->
+
+        <section id="features">
+
+            <div class="section-title reveal">
+
+                <div class="section-kicker">
+                    FEATURES
+                </div>
+
+                <h2>
+                    چرا Mamad Craft SMP؟
+                </h2>
+
+                <p>
+                    همه چیز آماده‌ست تا وارد دنیای ماینکرفت بشی
+                    و با دوستات یه ماجراجویی خفن شروع کنی.
+                </p>
+
+            </div>
+
+
+            <div class="features">
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-icon">
+                        ⛏️
+                    </div>
+
+                    <h3>
+                        بقا و ماجراجویی
+                    </h3>
+
+                    <p>
+                        منابع جمع کن،
+                        خونه بساز،
+                        معدن برو
+                        و دنیای خودت رو بساز.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-icon">
+                        👥
+                    </div>
+
+                    <h3>
+                        بازی با دوستان
+                    </h3>
+
+                    <p>
+                        با دوستات وارد سرور شو
+                        و با هم پروژه‌های بزرگ
+                        و خفن بسازید.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-icon">
+                        🏰
+                    </div>
+
+                    <h3>
+                        ساخت‌وساز
+                    </h3>
+
+                    <p>
+                        قلعه،
+                        شهر،
+                        خانه،
+                        مزرعه
+                        و هر چیزی که دوست داری بساز.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-icon">
+                        🌎
+                    </div>
+
+                    <h3>
+                        دنیای بزرگ
+                    </h3>
+
+                    <p>
+                        به اطراف سفر کن،
+                        مکان‌های جدید پیدا کن
+                        و ماجراجویی خودت رو شروع کن.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-icon">
+                        ⚔️
+                    </div>
+
+                    <h3>
+                        چالش
+                    </h3>
+
+                    <p>
+                        برای خودت هدف تعیین کن
+                        و با چالش‌های مختلف
+                        دنیای بازی رو جذاب‌تر کن.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card reveal">
+
+                    <div class="feature-icon">
+                        🟢
+                    </div>
+
+                    <h3>
+                        Mamad Craft
+                    </h3>
+
+                    <p>
+                        یک SMP دوستانه
+                        با فضای مخصوص خودش
+                        برای پلیرهای سرور.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BIG PANEL
+        ====================================================== -->
+
+        <section>
+
+            <div class="big-panel reveal">
+
+                <div class="big-panel-content">
+
+                    <div>
+
+                        <div class="section-kicker">
+                            MAMAD CRAFT
+                        </div>
+
+                        <h3>
+                            دنیای خودت رو بساز.
+                        </h3>
+
+                        <p>
+                            توی Mamad Craft SMP
+                            محدودیتی برای خلاقیتت نداری.
+                            با دوستات بازی کن،
+                            پروژه‌های بزرگ بساز،
+                            منابع جمع کن و
+                            دنیای خودت رو تبدیل به
+                            چیزی کن که همیشه می‌خواستی.
+                        </p>
+
+                    </div>
+
+                    <div class="big-number">
+                        SMP
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             HOW TO JOIN
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-title reveal">
+
+                <div class="section-kicker">
+                    HOW TO JOIN
+                </div>
+
+                <h2>
+                    چطوری وارد بشم؟
+                </h2>
+
+                <p>
+                    فقط چند قدم ساده لازمه.
+                </p>
+
+            </div>
+
+
+            <div class="steps">
+
+                <div class="step reveal">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h3>
+                        ماینکرفت رو باز کن
+                    </h3>
+
+                    <p>
+                        نسخه مناسب ماینکرفتت رو
+                        اجرا کن و وارد بخش
+                        Multiplayer شو.
+                    </p>
+
+                </div>
+
+
+                <div class="step reveal">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h3>
+                        آدرس سرور رو وارد کن
+                    </h3>
+
+                    <p>
+                        آدرس
+                        mamadcraftsmp.aternos.me
+                        رو داخل Server Address قرار بده.
+                    </p>
+
+                </div>
+
+
+                <div class="step reveal">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h3>
+                        وارد بازی شو
+                    </h3>
+
+                    <p>
+                        روی Join Server بزن
+                        و وارد دنیای
+                        Mamad Craft SMP شو.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RULES
+        ====================================================== -->
+
+        <section id="rules">
+
+            <div class="section-title reveal">
+
+                <div class="section-kicker">
+                    SERVER RULES
+                </div>
+
+                <h2>
+                    قوانین سرور
+                </h2>
+
+                <p>
+                    برای اینکه همه بتونن از بازی لذت ببرن،
+                    چند قانون ساده داریم.
+                </p>
+
+            </div>
+
+
+            <div class="rules">
+
+                <div class="rule reveal">
+
+                    <div class="rule-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            احترام به بقیه
+                        </strong>
+
+                        <span>
+                            با بازیکن‌های دیگه محترمانه رفتار کن.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rule reveal">
+
+                    <div class="rule-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            خرابکاری ممنوع
+                        </strong>
+
+                        <span>
+                            سازه‌ها و وسایل بقیه رو خراب نکن.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rule reveal">
+
+                    <div class="rule-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            اسپم نکن
+                        </strong>
+
+                        <span>
+                            چت سرور رو با پیام‌های تکراری پر نکن.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rule reveal">
+
+                    <div class="rule-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            تقلب ممنوع
+                        </strong>
+
+                        <span>
+                            از روش‌هایی که تجربه بازی بقیه رو خراب می‌کنه استفاده نکن.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rule reveal">
+
+                    <div class="rule-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            احترام به ساخت‌وساز
+                        </strong>
+
+                        <span>
+                            پروژه‌ها و ساختمان‌های دیگران رو دستکاری نکن.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rule reveal">
+
+                    <div class="rule-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            بازی جوانمردانه
+                        </strong>
+
+                        <span>
+                            هدف اصلی سرور اینه که همه با هم خوش بگذرونن.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             JOIN
+        ====================================================== -->
+
+        <section id="join">
+
+            <div class="join-box reveal">
+
+                <div class="section-kicker">
+                    JOIN MAMAD CRAFT
+                </div>
+
+                <h2>
+                    آماده‌ای وارد شی؟ 👑
+                </h2>
+
+                <p>
+                    آدرس سرور رو کپی کن،
+                    وارد ماینکرفت شو
+                    و ماجراجویی رو شروع کن.
+                </p>
+
+
+                <div class="ip-box">
+
+                    <span>
+                        ●
+                    </span>
+
+                    mamadcraftsmp.aternos.me
+
+                </div>
+
+
+                <br>
+
+
+                <button
+                    class="btn btn-primary"
+                    id="copyIp"
+                    type="button"
+                >
+                    📋 کپی آدرس سرور
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             FAQ
+        ====================================================== -->
+
+        <section id="faq">
+
+            <div class="section-title reveal">
+
+                <div class="section-kicker">
+                    FAQ
+                </div>
+
+                <h2>
+                    سوالات متداول
+                </h2>
+
+                <p>
+                    چندتا سوالی که ممکنه قبل از ورود داشته باشی.
+                </p>
+
+            </div>
+
+
+            <div class="faq">
+
+                <details class="reveal">
+
+                    <summary>
+                        آدرس سرور چیه؟
+                    </summary>
+
+                    <p>
+                        آدرس سرور:
+                        mamadcraftsmp.aternos.me
+                    </p>
+
+                </details>
+
+
+                <details class="reveal">
+
+                    <summary>
+                        اسم سرور چیه؟
+                    </summary>
+
+                    <p>
+                        اسم سرور
+                        Mamad Craft SMP
+                        هست.
+                    </p>
+
+                </details>
+
+
+                <details class="reveal">
+
+                    <summary>
+                        سرور برای بازی با دوستامه؟
+                    </summary>
+
+                    <p>
+                        بله؛ این سایت برای معرفی
+                        Mamad Craft SMP
+                        ساخته شده و سرور برای بازی گروهی و دوستانه استفاده می‌شود.
+                    </p>
+
+                </details>
+
+
+                <details class="reveal">
+
+                    <summary>
+                        وضعیت آنلاین سرور روی سایت نمایش داده میشه؟
+                    </summary>
+
+                    <p>
+                        در این نسخه قابلیت نمایش زنده وضعیت سرور غیرفعال است.
+                    </p>
+
+                </details>
+
+
+                <details class="reveal">
+
+                    <summary>
+                        از کجا با بقیه در ارتباط باشیم؟
+                    </summary>
+
+                    <p>
+                        می‌تونی از لینک روبیکای Mamad Craft استفاده کنی.
+                    </p>
+
+                </details>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RUBIKA
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-title reveal">
+
+                <div class="section-kicker">
+                    COMMUNITY
+                </div>
+
+                <h2>
+                    جامعه Mamad Craft
+                </h2>
+
+                <p>
+                    برای ارتباط با اعضای کامیونیتی می‌تونی وارد روبیکا بشی.
+                </p>
+
+            </div>
+
+
+            <div class="social-card reveal">
+
+                <div class="social-info">
+
+                    <div class="social-icon">
+                        💬
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            روبیکا
+                        </h3>
+
+                        <p>
+                            Mamad Craft SMP
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    class="btn btn-primary"
+                    href="https://rubika.ir/joinc/FGABAJCA0DAKVOBPRVBXOMADGYOKACZG"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    ورود به روبیکا
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <p>
+            © 2026
+            <span class="footer-brand">
+                Mamad Craft SMP
+            </span>
+            — همه حقوق محفوظ است.
+        </p>
+
+        <p>
+            ساخته شده برای یک دنیای Minecraft خفن 👑
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================================================
+         TOP BUTTON
+    ========================================================== -->
+
+    <button
+        class="top-button"
+        id="topButton"
+        type="button"
+        aria-label="بازگشت به بالا"
+    >
+        ↑
+    </button>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =====================================================
+           SCROLL REVEAL
+        ====================================================== */
+
+        const revealElements =
+            document.querySelectorAll(".reveal");
+
+
+        const revealObserver =
+            new IntersectionObserver(
+                (entries) => {
+
+                    entries.forEach(
+                        (entry) => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target.classList.add(
+                                    "show"
+                                );
+
+                                revealObserver.unobserve(
+                                    entry.target
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        revealElements.forEach(
+            (element) => {
+
+                revealObserver.observe(
+                    element
+                );
+
+            }
+        );
+
+
+
+        /* =====================================================
+           COPY SERVER IP
+        ====================================================== */
+
+        const copyButton =
+            document.getElementById(
+                "copyIp"
+            );
+
+
+        const serverIP =
+            "mamadcraftsmp.aternos.me";
+
+
+        copyButton.addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        serverIP
+                    );
+
+                    copyButton.textContent =
+                        "✅ کپی شد!";
+
+                    copyButton.style.background =
+                        "linear-gradient(135deg,#7dffad,#00d957)";
+
+
+                    setTimeout(
+                        () => {
+
+                            copyButton.textContent =
+                                "📋 کپی آدرس سرور";
+
+                        },
+                        1800
+                    );
+
+                }
+
+                catch (error) {
+
+                    copyButton.textContent =
+                        "❌ کپی نشد";
+
+                    setTimeout(
+                        () => {
+
+                            copyButton.textContent =
+                                "📋 کپی آدرس سرور";
+
+                        },
+                        1800
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           TOP BUTTON
+        ====================================================== */
+
+        const topButton =
+            document.getElementById(
+                "topButton"
+            );
+
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                if (
+                    window.scrollY >
+                    500
+                ) {
+
+                    topButton.classList.add(
+                        "visible"
+                    );
+
+                }
+
+                else {
+
+                    topButton.classList.remove(
+                        "visible"
+                    );
+
+                }
+
+            }
+        );
+
+
+        topButton.addEventListener(
+            "click",
+            () => {
+
+                window.scrollTo(
+                    {
+                        top: 0,
+                        behavior: "smooth"
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =====================================================
+           EXTRA MOUSE GLOW
+        ====================================================== */
+
+        const mouseGlow =
+            document.createElement(
+                "div"
+            );
+
+
+        mouseGlow.style.position =
+            "fixed";
+
+        mouseGlow.style.width =
+            "250px";
+
+        mouseGlow.style.height =
+            "250px";
+
+        mouseGlow.style.borderRadius =
+            "50%";
+
+        mouseGlow.style.pointerEvents =
+            "none";
+
+        mouseGlow.style.zIndex =
+            "-1";
+
+        mouseGlow.style.background =
+            "rgba(0,255,102,0.035)";
+
+        mouseGlow.style.filter =
+            "blur(45px)";
+
+        mouseGlow.style.transform =
+            "translate(-50%,-50%)";
+
+        document.body.appendChild(
+            mouseGlow
+        );
+
+
+        document.addEventListener(
+            "mousemove",
+            (event) => {
+
+                mouseGlow.style.left =
+                    event.clientX + "px";
+
+                mouseGlow.style.top =
+                    event.clientY + "px";
+
+            }
+        );
+
+
+
+        /* =====================================================
+           CARD TILT EFFECT
+        ====================================================== */
+
+        const cards =
+            document.querySelectorAll(
+                ".feature-card"
+            );
+
+
+        cards.forEach(
+            (card) => {
+
+                card.addEventListener(
+                    "mousemove",
+                    (event) => {
+
+                        const rect =
+                            card.getBoundingClientRect();
+
+                        const x =
+                            event.clientX -
+                            rect.left;
+
+                        const y =
+                            event.clientY -
+                            rect.top;
+
+                        const centerX =
+                            rect.width / 2;
+
+                        const centerY =
+                            rect.height / 2;
+
+                        const rotateX =
+                            (
+                                centerY - y
+                            ) / 22;
+
+                        const rotateY =
+                            (
+                                x - centerX
+                            ) / 22;
+
+                        card.style.transform =
+                            `perspective(700px)
+                             rotateX(${rotateX}deg)
+                             rotateY(${rotateY}deg)
+                             translateY(-7px)`;
+
+                    }
+                );
+
+
+                card.addEventListener(
+                    "mouseleave",
+                    () => {
+
+                        card.style.transform =
+                            "";
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =====================================================
+           PAGE LOADED
+        ====================================================== */
+
+        window.addEventListener(
+            "load",
+            () => {
+
+                document.body.classList.add(
+                    "loaded"
+                );
+
+            }
+        );
+
+    </script>
+
 
 </body>
+
 </html>
