@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mamad Craft SMP</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+:root{
+    --green:#55ff55;
+    --dark:#030603;
+    --panel:rgba(10,20,12,.78);
+}
+
+body{
+    margin:0;
+    background:#020402;
+    color:white;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    overflow-x:hidden;
+}
+
+/* =========================
+   CURSOR LIGHT
+========================= */
+
+.cursor-light{
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9998;
+
+    background:radial-gradient(
+        circle,
+        rgba(85,255,85,.13),
+        transparent 65%
+    );
+
+    transform:translate(-50%,-50%);
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:
+        radial-gradient(circle at center,#174b20 0%,#061006 40%,#010201 80%);
+
+    transition:opacity 1.2s,visibility 1.2s;
+}
+
+#loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-ring{
+    width:150px;
+    height:150px;
+    border:3px solid rgba(85,255,85,.15);
+    border-top-color:var(--green);
+    border-right-color:var(--green);
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    animation:spin 1.5s linear infinite;
+
+    box-shadow:
+        0 0 20px rgba(85,255,85,.3),
+        inset 0 0 20px rgba(85,255,85,.1);
+}
+
+.loader-ring span{
+    font-size:60px;
+    animation:counterSpin 1.5s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+@keyframes counterSpin{
+    to{transform:rotate(-360deg)}
+}
+
+.loader-title{
+    margin-top:25px;
+    font-size:40px;
+    color:var(--green);
+
+    text-shadow:
+        0 0 10px var(--green),
+        0 0 30px var(--green);
+
+    animation:loaderPulse 1.2s infinite alternate;
+}
+
+@keyframes loaderPulse{
+    from{opacity:.65;transform:scale(.98)}
+    to{opacity:1;transform:scale(1.04)}
+}
+
+.loader-text{
+    margin-top:12px;
+    color:#bbb;
+}
+
+.loading-bar{
+    width:300px;
+    height:7px;
+    margin-top:25px;
+    background:#171717;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.loading-progress{
+    width:0;
+    height:100%;
+    background:var(--green);
+
+    box-shadow:0 0 20px var(--green);
+
+    animation:load 3s forwards;
+}
+
+@keyframes load{
+    to{width:100%}
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+
+    background:
+        radial-gradient(circle at 20% 20%,rgba(0,255,70,.12),transparent 25%),
+        radial-gradient(circle at 80% 80%,rgba(0,255,70,.09),transparent 25%);
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    z-index:-9;
+    pointer-events:none;
+
+    background-image:
+        linear-gradient(rgba(85,255,85,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(85,255,85,.035) 1px,transparent 1px);
+
+    background-size:55px 55px;
+
+    transform:perspective(500px) rotateX(60deg) scale(2);
+
+    animation:gridMove 10s linear infinite;
+}
+
+@keyframes gridMove{
+    from{background-position:0 0}
+    to{background-position:0 55px}
+}
+
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-5;
+}
+
+.particle{
+    position:absolute;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:var(--green);
+
+    box-shadow:0 0 15px var(--green);
+
+    animation:float 9s linear infinite;
+}
+
+.particle:nth-child(1){left:5%;animation-delay:0s}
+.particle:nth-child(2){left:15%;animation-delay:2s}
+.particle:nth-child(3){left:28%;animation-delay:4s}
+.particle:nth-child(4){left:42%;animation-delay:1s}
+.particle:nth-child(5){left:55%;animation-delay:5s}
+.particle:nth-child(6){left:68%;animation-delay:3s}
+.particle:nth-child(7){left:80%;animation-delay:6s}
+.particle:nth-child(8){left:94%;animation-delay:1.5s}
+.particle:nth-child(9){left:35%;animation-delay:7s}
+.particle:nth-child(10){left:75%;animation-delay:4s}
+
+@keyframes float{
+    0%{
+        top:110%;
+        opacity:0;
+        transform:scale(.5);
+    }
+
+    20%{opacity:1}
+
+    100%{
+        top:-10%;
+        opacity:0;
+        transform:scale(2);
+    }
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+    padding:30px;
+
+    overflow:hidden;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
+
+    background:rgba(85,255,85,.08);
+    filter:blur(80px);
+
+    animation:heroGlow 5s infinite alternate;
+}
+
+@keyframes heroGlow{
+    from{transform:scale(.8)}
+    to{transform:scale(1.3)}
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+    font-size:105px;
+    position:relative;
+
+    animation:
+        logoFloat 3s ease-in-out infinite,
+        logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoFloat{
+    0%,100%{
+        transform:translateY(0) rotate(-4deg);
+    }
+
+    50%{
+        transform:translateY(-25px) rotate(4deg);
+    }
+}
+
+@keyframes logoGlow{
+    from{
+        filter:drop-shadow(0 0 5px var(--green));
+    }
+
+    to{
+        filter:
+            drop-shadow(0 0 20px var(--green))
+            drop-shadow(0 0 45px rgba(85,255,85,.7));
+    }
+}
+
+
+/* =========================
+   TITLE GLITCH
+========================= */
+
+.title-wrap{
+    position:relative;
+}
+
+h1{
+    margin:10px 0;
+    font-size:70px;
+
+    color:var(--green);
+
+    text-shadow:
+        0 0 10px var(--green),
+        0 0 30px var(--green),
+        0 0 70px rgba(85,255,85,.4);
+
+    animation:titleIn 1.5s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes titleIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(70px)
+            scale(.7)
+            rotateX(60deg);
+        filter:blur(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+        filter:blur(0);
+    }
+}
+
+.title-wrap::before,
+.title-wrap::after{
+    content:"Mamad Craft SMP";
+
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:0;
+}
+
+.title-wrap::before{
+    color:#00ffff;
+    animation:glitch1 4s infinite;
+}
+
+.title-wrap::after{
+    color:#ff00ff;
+    animation:glitch2 4s infinite;
+}
+
+@keyframes glitch1{
+    0%,90%,100%{opacity:0}
+    91%{
+        opacity:.7;
+        transform:translate(-5px,2px);
+        clip-path:inset(20% 0 60% 0);
+    }
+    93%{
+        opacity:0;
+    }
+}
+
+@keyframes glitch2{
+    0%,93%,100%{opacity:0}
+    94%{
+        opacity:.7;
+        transform:translate(5px,-2px);
+        clip-path:inset(60% 0 15% 0);
+    }
+    96%{
+        opacity:0;
+    }
+}
+
+
+/* =========================
+   SUBTITLE
+========================= */
+
+.subtitle{
+    color:#ccc;
+    font-size:22px;
+
+    animation:
+        fadeUp 1.8s .2s both;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
+
+    margin-top:25px;
+
+    animation:
+        fadeUp 2s .5s both;
+}
+
+.button{
+    position:relative;
+    overflow:hidden;
+
+    padding:17px 34px;
+
+    border-radius:15px;
+
+    text-decoration:none;
+
+    font-size:18px;
+    font-weight:bold;
+
+    background:var(--green);
+    color:#061006;
+
+    box-shadow:
+        0 0 10px var(--green);
+
+    transition:
+        transform .35s,
+        box-shadow .35s;
+}
+
+.button::before{
+    content:"";
+
+    position:absolute;
+    top:0;
+    left:-120%;
+
+    width:80%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.8),
+        transparent
+    );
+
+    transform:skewX(-25deg);
+
+    transition:.6s;
+}
+
+.button:hover::before{
+    left:140%;
+}
+
+.button:hover{
+    transform:
+        translateY(-10px)
+        scale(1.08);
+
+    box-shadow:
+        0 0 15px var(--green),
+        0 0 45px var(--green);
+}
+
+.button:active{
+    transform:scale(.94);
+}
+
+.button.dark{
+    background:rgba(10,15,10,.8);
+    color:white;
+    border:1px solid var(--green);
+    box-shadow:none;
+}
+
+.button.dark:hover{
+    background:var(--green);
+    color:#020402;
+}
+
+
+/* =========================
+   SCROLL ARROW
+========================= */
+
+.scroll-down{
+    position:absolute;
+    bottom:25px;
+
+    color:#55ff55;
+
+    font-size:28px;
+
+    animation:
+        bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+        opacity:.5;
+    }
+
+    50%{
+        transform:translateY(12px);
+        opacity:1;
+    }
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+    min-height:500px;
+
+    padding:110px 20px;
+
+    opacity:0;
+    transform:translateY(100px) scale(.96);
+
+    transition:
+        opacity 1s ease,
+        transform 1s cubic-bezier(.2,.8,.2,1);
+}
+
+.section.show{
+    opacity:1;
+    transform:none;
+}
+
+.section h2{
+    font-size:44px;
+
+    color:var(--green);
+
+    text-shadow:
+        0 0 10px var(--green),
+        0 0 30px rgba(85,255,85,.5);
+
+    margin-bottom:50px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    flex-wrap:wrap;
+}
+
+.card{
+    width:290px;
+    min-height:230px;
+
+    padding:30px;
+
+    position:relative;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,30,21,.9),
+            rgba(4,8,5,.9)
+        );
+
+    border:
+        1px solid rgba(85,255,85,.15);
+
+    border-radius:25px;
+
+    transform:
+        perspective(700px)
+        rotateX(0)
+        rotateY(0);
+
+    transition:
+        transform .4s,
+        border .4s,
+        box-shadow .4s;
+}
+
+.card::before{
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+    height:250px;
+
+    left:-120px;
+    top:-120px;
+
+    background:var(--green);
+
+    filter:blur(100px);
+
+    opacity:0;
+
+    transition:.5s;
+}
+
+.card:hover::before{
+    opacity:.15;
+}
+
+.card:hover{
+    transform:
+        perspective(700px)
+        rotateX(5deg)
+        rotateY(-5deg)
+        translateY(-18px)
+        scale(1.04);
+
+    border-color:var(--green);
+
+    box-shadow:
+        0 0 25px rgba(85,255,85,.2),
+        0 25px 60px rgba(0,0,0,.7);
+}
+
+.card h3{
+    position:relative;
+    font-size:26px;
+    color:var(--green);
+}
+
+.card p{
+    position:relative;
+    color:#ccc;
+    line-height:2;
+}
+
+
+/* =========================
+   SERVER
+========================= */
+
+.server-box{
+    max-width:680px;
+
+    margin:auto;
+
+    padding:40px;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,25,16,.9),
+            rgba(3,7,4,.95)
+        );
+
+    border:1px solid var(--green);
+
+    border-radius:28px;
+
+    box-shadow:
+        0 0 25px rgba(85,255,85,.15);
+
+    overflow:hidden;
+
+    animation:serverPulse 3s infinite alternate;
+}
+
+.server-box::before{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    top:-180px;
+    right:-100px;
+
+    background:var(--green);
+
+    filter:blur(100px);
+
+    opacity:.1;
+
+    animation:serverOrb 5s infinite alternate;
+}
+
+@keyframes serverOrb{
+    from{transform:translate(0,0)}
+    to{transform:translate(-150px,200px)}
+}
+
+@keyframes serverPulse{
+    from{
+        box-shadow:
+            0 0 20px rgba(85,255,85,.1);
+    }
+
+    to{
+        box-shadow:
+            0 0 50px rgba(85,255,85,.25);
+    }
+}
+
+.server-ip{
+    position:relative;
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:#020402;
+
+    border-radius:14px;
+
+    border:1px solid #245f24;
+
+    color:var(--green);
+
+    font-family:monospace;
+
+    font-size:21px;
+
+    overflow-wrap:anywhere;
+    word-break:break-word;
+
+    animation:ipGlow 2s infinite alternate;
+}
+
+@keyframes ipGlow{
+    from{
+        box-shadow:0 0 5px rgba(85,255,85,.05);
+    }
+
+    to{
+        box-shadow:0 0 20px rgba(85,255,85,.2);
+    }
+}
+
+.copy-btn{
+    margin-top:18px;
+
+    padding:13px 25px;
+
+    border-radius:12px;
+
+    border:1px solid var(--green);
+
+    background:transparent;
+
+    color:var(--green);
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+}
+
+.copy-btn:hover{
+    background:var(--green);
+    color:#020402;
+
+    transform:scale(1.05);
+
+    box-shadow:0 0 25px var(--green);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:45px;
+
+    background:#010201;
+
+    border-top:1px solid #152015;
+
+    color:#777;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    h1{
+        font-size:43px;
+    }
+
+    .logo{
+        font-size:75px;
+    }
+
+    .loader-title{
+        font-size:30px;
+    }
+
+    .subtitle{
+        font-size:18px;
+    }
+
+    .section h2{
+        font-size:33px;
+    }
+
+    .button{
+        width:230px;
+    }
+
+    .cursor-light{
+        display:none;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="cursor-light"></div>
+
+
+<div id="loader">
+
+    <div class="loader-ring">
+        <span>👑</span>
+    </div>
+
+    <div class="loader-title">
+        MAMAD CRAFT SMP
+    </div>
+
+    <div class="loader-text">
+        در حال ورود به دنیای Mamad Craft...
+    </div>
+
+    <div class="loading-bar">
+        <div class="loading-progress"></div>
+    </div>
+
+</div>
+
+
+<div class="background"></div>
+<div class="grid"></div>
+
+
+<div class="particles">
+
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+</div>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="logo">
+        👑
+    </div>
+
+    <div class="title-wrap">
+
+        <h1>
+            Mamad Craft SMP
+        </h1>
+
+    </div>
+
+    <p class="subtitle">
+        🔥 به دنیای افسانه‌ای Mamad Craft خوش اومدی! 🔥
+    </p>
+
+    <div class="buttons">
+
+        <a href="#server" class="button">
+            🎮 ورود به سرور
+        </a>
+
+        <a
+            href="https://rubika.ir/joinc/FGABAJCA0DAKVOBPRVBXOMADGYOKACZG"
+            target="_blank"
+            class="button dark">
+
+            📱 روبیکا
+
+        </a>
+
+    </div>
+
+    <div class="scroll-down">
+        ↓
+    </div>
+
+</section>
+
+
+<!-- SERVER -->
+
+<section class="section" id="server">
+
+    <h2>
+        🎮 آدرس سرور
+    </h2>
+
+    <div class="server-box">
+
+        <h3>
+            👑 Mamad Craft SMP
+        </h3>
+
+        <p>
+            آدرس سرور Minecraft:
+        </p>
+
+        <div class="server-ip" id="serverIP">
+            mamadcraftsmp.aternos.me
+        </div>
+
+        <button class="copy-btn" onclick="copyIP()">
+            📋 کپی آدرس سرور
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="section">
+
+    <h2>
+        🔥 درباره سرور
+    </h2>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>🌍 Survival</h3>
+
+            <p>
+                وارد دنیای Survival شو،
+                منابع جمع کن و ماجراجویی خودت رو شروع کن!
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>👑 Mamad Craft</h3>
+
+            <p>
+                سرور اختصاصی Mamad Craft SMP
+                برای بازی و رقابت با دوستان.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>⚔️ Adventure</h3>
+
+            <p>
+                بساز، بجنگ، ماجراجویی کن
+                و قلمرو خودت رو بساز!
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RULES -->
+
+<section class="section">
+
+    <h2>
+        📜 قوانین سرور
+    </h2>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>🚫 بدون تقلب</h3>
+
+            <p>
+                از Cheat و Hack استفاده نکنید.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>🤝 احترام</h3>
+
+            <p>
+                با بازیکنان دیگر با احترام رفتار کنید.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>💥 خرابکاری ممنوع</h3>
+
+            <p>
+                ساختمان‌ها و وسایل دیگران
+                را خراب نکنید.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RUBIKA -->
+
+<section class="section">
+
+    <h2>
+        📱 جامعه Mamad Craft
+    </h2>
+
+    <p style="font-size:20px;color:#ccc;">
+        برای اخبار و اتفاقات سرور به روبیکا بپیوند!
+    </p>
+
+    <br>
+
+    <a
+        href="https://rubika.ir/joinc/FGABAJCA0DAKVOBPRVBXOMADGYOKACZG"
+        target="_blank"
+        class="button">
+
+        🚀 ورود به روبیکا
+
+    </a>
+
+</section>
+
+
+<footer>
+
+    © 2026 Mamad Craft SMP 👑
+
+    <br><br>
+
+    ساخته شده با ♥ برای بازیکنان Mamad Craft
+
+</footer>
+
+
+<script>
+
+/* LOADER */
+
+window.addEventListener("load",function(){
+
+    setTimeout(function(){
+
+        document
+        .getElementById("loader")
+        .classList.add("hide");
+
+    },3000);
+
+});
+
+
+/* CURSOR LIGHT */
+
+const cursorLight =
+document.querySelector(".cursor-light");
+
+document.addEventListener("mousemove",function(e){
+
+    cursorLight.style.left =
+        e.clientX + "px";
+
+    cursorLight.style.top =
+        e.clientY + "px";
+
+});
+
+
+/* SCROLL REVEAL */
+
+const sections =
+document.querySelectorAll(".section");
+
+const observer =
+new IntersectionObserver(function(entries){
+
+    entries.forEach(function(entry){
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+},{
+    threshold:.15
+});
+
+sections.forEach(function(section){
+
+    observer.observe(section);
+
+});
+
+
+/* COPY IP */
+
+function copyIP(){
+
+    const ip =
+    document.getElementById("serverIP").innerText;
+
+    navigator.clipboard.writeText(ip);
+
+    const button =
+    document.querySelector(".copy-btn");
+
+    button.innerText="✅ کپی شد!";
+
+    setTimeout(function(){
+
+        button.innerText="📋 کپی آدرس سرور";
+
+    },2000);
+
+}
+
+</script>
+
+</body>
+</html>
