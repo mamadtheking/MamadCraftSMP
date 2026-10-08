@@ -3,214 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Mamad Craft SMP</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #050805;
-  color: white;
-  overflow-x: hidden;
+body{
+    font-family:Arial,sans-serif;
+    background:#050805;
+    color:white;
+    overflow-x:hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    linear-gradient(rgba(0,255,100,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,100,.04) 1px, transparent 1px);
-  background-size: 45px 45px;
-  animation: gridMove 10s linear infinite;
-  pointer-events: none;
+/* پس زمینه */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        linear-gradient(rgba(0,255,100,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,100,.035) 1px,transparent 1px);
+    background-size:45px 45px;
+    animation:gridMove 10s linear infinite;
+    pointer-events:none;
 }
 
-@keyframes gridMove {
-  from { transform: translateY(0); }
-  to { transform: translateY(45px); }
+@keyframes gridMove{
+    from{transform:translateY(0)}
+    to{transform:translateY(45px)}
 }
 
-header {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px;
+/* HERO */
+
+header{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
 }
 
-.hero {
-  animation: fadeUp 1s ease;
+.hero{
+    animation:heroIn 1s ease;
 }
 
-.crown {
-  font-size: 70px;
-  animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px #00ff66);
+@keyframes heroIn{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-h1 {
-  font-size: clamp(45px, 9vw, 100px);
-  color: #00ff66;
-  text-shadow:
-    0 0 10px #00ff66,
-    0 0 30px #00ff66;
-  margin: 15px 0;
+.crown{
+    font-size:75px;
+    animation:float 3s ease-in-out infinite;
+    filter:drop-shadow(0 0 20px #00ff66);
 }
 
-.subtitle {
-  color: #b7ffca;
-  font-size: 20px;
-  margin-bottom: 30px;
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-15px);
+    }
 }
 
-.buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  flex-wrap: wrap;
+h1{
+    font-size:clamp(45px,9vw,100px);
+    color:#00ff66;
+    text-shadow:
+        0 0 10px #00ff66,
+        0 0 30px #00ff66;
+    margin:15px 0;
 }
 
-button,
-.btn {
-  border: none;
-  text-decoration: none;
-  padding: 14px 25px;
-  border-radius: 12px;
-  background: #00ff66;
-  color: #001a08;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .25s;
+.subtitle{
+    color:#b7ffca;
+    font-size:20px;
+    margin-bottom:30px;
 }
 
-button:hover,
-.btn:hover {
-  transform: translateY(-4px) scale(1.04);
-  box-shadow: 0 0 25px #00ff66;
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
-section {
-  max-width: 1000px;
-  margin: auto;
-  padding: 80px 25px;
+.btn,
+button{
+    border:none;
+    text-decoration:none;
+    padding:14px 25px;
+    border-radius:12px;
+    background:#00ff66;
+    color:#001a08;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
 }
 
-.title {
-  text-align: center;
-  color: #00ff66;
-  font-size: 38px;
-  margin-bottom: 35px;
-  text-shadow: 0 0 15px #00ff66;
+.btn:hover,
+button:hover{
+    transform:translateY(-4px) scale(1.04);
+    box-shadow:0 0 25px #00ff66;
 }
 
-.card {
-  background: rgba(10,25,14,.8);
-  border: 1px solid rgba(0,255,100,.25);
-  border-radius: 20px;
-  padding: 30px;
-  margin-bottom: 25px;
-  transition: .3s;
-  box-shadow: 0 0 25px rgba(0,255,100,.06);
+/* SECTIONS */
+
+section{
+    max-width:1000px;
+    margin:auto;
+    padding:80px 25px;
 }
 
-.card:hover {
-  transform: translateY(-7px);
-  border-color: #00ff66;
-  box-shadow: 0 0 30px rgba(0,255,100,.2);
+.title{
+    text-align:center;
+    color:#00ff66;
+    font-size:38px;
+    margin-bottom:35px;
+    text-shadow:0 0 15px #00ff66;
 }
 
-.server-box {
-  text-align: center;
+.card{
+    background:rgba(10,25,14,.85);
+    border:1px solid rgba(0,255,100,.25);
+    border-radius:20px;
+    padding:30px;
+    margin-bottom:25px;
+    transition:.3s;
+    box-shadow:0 0 25px rgba(0,255,100,.06);
 }
 
-.ip {
-  margin: 20px auto;
-  padding: 15px;
-  background: #020402;
-  border-radius: 12px;
-  color: #00ff66;
-  font-size: 19px;
-  max-width: 500px;
-  word-break: break-all;
+.card:hover{
+    transform:translateY(-7px);
+    border-color:#00ff66;
+    box-shadow:0 0 30px rgba(0,255,100,.2);
 }
 
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-radius: 20px;
-  background: #101510;
-  margin: 15px 0;
-  font-weight: bold;
+.server-box{
+    text-align:center;
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #888;
+/* IP */
+
+.ip{
+    margin:20px auto;
+    padding:15px;
+    background:#020402;
+    border-radius:12px;
+    color:#00ff66;
+    font-size:19px;
+    max-width:550px;
+    word-break:break-all;
 }
 
-.online {
-  background: #00ff66;
-  box-shadow: 0 0 15px #00ff66;
+/* STATUS */
+
+.status{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+
+    width:max-content;
+    max-width:100%;
+
+    margin:20px auto;
+    padding:12px 20px;
+
+    border-radius:30px;
+
+    background:#101510;
+
+    font-weight:bold;
+
+    transition:.3s;
 }
 
-.offline {
-  background: #ff3333;
-  box-shadow: 0 0 15px #ff3333;
+.dot{
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    background:#888;
 }
 
-#statusText {
-  color: #aaa;
+/* سبز */
+
+.dot.online{
+    background:#00ff66;
+    box-shadow:
+        0 0 8px #00ff66,
+        0 0 20px #00ff66;
+
+    animation:pulse 1.5s infinite;
 }
 
-#players {
-  color: #aaa;
+/* قرمز */
+
+.dot.offline{
+    background:#ff3333;
+    box-shadow:
+        0 0 8px #ff3333,
+        0 0 20px #ff3333;
 }
 
-footer {
-  text-align: center;
-  padding: 35px;
-  color: #777;
+/* زرد */
+
+.dot.error{
+    background:#ffaa00;
+    box-shadow:
+        0 0 8px #ffaa00,
+        0 0 20px #ffaa00;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+@keyframes pulse{
+    0%,100%{
+        opacity:1;
+    }
+    50%{
+        opacity:.45;
+    }
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+#statusText{
+    color:#aaa;
 }
 
-@media(max-width:600px) {
-  .crown {
-    font-size: 55px;
-  }
+#players{
+    color:#aaa;
+}
 
-  .subtitle {
-    font-size: 17px;
-  }
+/* دکمه */
 
-  section {
-    padding: 55px 18px;
-  }
+button{
+    margin-top:10px;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:35px;
+    color:#777;
+}
+
+/* موبایل */
+
+@media(max-width:600px){
+
+    .crown{
+        font-size:55px;
+    }
+
+    .subtitle{
+        font-size:17px;
+    }
+
+    section{
+        padding:55px 18px;
+    }
+
+    .status{
+        font-size:14px;
+    }
 }
 </style>
 </head>
@@ -218,139 +286,376 @@ footer {
 <body>
 
 <header>
-  <div class="hero">
-    <div class="crown">👑</div>
 
-    <h1>MAMAD CRAFT</h1>
+<div class="hero">
 
-    <p class="subtitle">
-      Welcome to Mamad Craft SMP
-    </p>
+<div class="crown">👑</div>
 
-    <div class="buttons">
-      <a class="btn" href="#server">ورود به سرور</a>
+<h1>MAMAD CRAFT</h1>
 
-      <a class="btn"
-      href="https://rubika.ir/joinc/FGABAJCA0DAKVOBPRVBXOMADGYOKACZG"
-      target="_blank">
-        روبیکا
-      </a>
-    </div>
-  </div>
+<p class="subtitle">
+Welcome to Mamad Craft SMP
+</p>
+
+<div class="buttons">
+
+<a class="btn" href="#server">
+🎮 وضعیت سرور
+</a>
+
+<a
+class="btn"
+href="https://rubika.ir/joinc/FGABAJCA0DAKVOBPRVBXOMADGYOKACZG"
+target="_blank">
+💬 روبیکا
+</a>
+
+</div>
+
+</div>
+
 </header>
+
 
 <section id="server">
 
-  <h2 class="title">وضعیت سرور</h2>
+<h2 class="title">
+🎮 وضعیت لحظه‌ای سرور
+</h2>
 
-  <div class="card server-box">
+<div class="card server-box">
 
-    <h2>🎮 Mamad Craft SMP</h2>
+<h2>
+👑 Mamad Craft SMP
+</h2>
 
-    <div class="ip">
-      mamadcraftsmp.aternos.me
-    </div>
+<div class="ip">
+mamadcraftsmp.aternos.me
+</div>
 
-    <div class="status">
-      <span class="dot" id="statusDot"></span>
-      <span id="statusText">در حال بررسی...</span>
-      <span id="players"></span>
-    </div>
 
-    <br>
+<div class="status">
 
-    <button onclick="copyIP()">
-      📋 کپی IP
-    </button>
+<span
+class="dot"
+id="statusDot">
+</span>
 
-  </div>
+<span id="statusText">
+⏳ در حال بررسی...
+</span>
+
+<span id="players">
+</span>
+
+</div>
+
+
+<p id="lastCheck"
+style="color:#666;font-size:13px;margin:10px">
+آخرین بررسی: —
+</p>
+
+
+<button onclick="copyIP()">
+📋 کپی IP
+</button>
+
+</div>
 
 </section>
+
 
 <section>
 
-  <h2 class="title">درباره سرور</h2>
+<h2 class="title">
+🌍 درباره سرور
+</h2>
 
-  <div class="card">
-    <h2>🌍 SMP</h2>
-    <br>
-    <p>
-      به دنیای Mamad Craft خوش اومدی!
-      با دوستات بازی کن، بساز و ماجراجویی کن.
-    </p>
-  </div>
+<div class="card">
+
+<h2>
+🔥 Mamad Craft SMP
+</h2>
+
+<br>
+
+<p>
+به دنیای Mamad Craft خوش اومدی!
+با دوستات بازی کن، بساز و ماجراجویی کن. 👑
+</p>
+
+</div>
 
 </section>
 
+
 <footer>
-  👑 Mamad Craft SMP
+
+👑 Mamad Craft SMP
+
 </footer>
+
 
 <script>
 
-const SERVER_IP = "mamadcraftsmp.aternos.me";
+const SERVER_IP =
+"mamadcraftsmp.aternos.me";
 
-async function checkServer() {
 
-  const statusText = document.getElementById("statusText");
-  const statusDot = document.getElementById("statusDot");
-  const players = document.getElementById("players");
+/*
+    API وضعیت Minecraft
+*/
 
-  statusText.textContent = "در حال بررسی...";
-  players.textContent = "";
+async function checkServer(){
 
-  try {
+    const statusText =
+        document.getElementById("statusText");
 
-    const response = await fetch(
-      "https://api.mcsrvstat.us/3/" + SERVER_IP
-    );
+    const statusDot =
+        document.getElementById("statusDot");
 
-    const data = await response.json();
+    const players =
+        document.getElementById("players");
 
-    if (data.online) {
+    const lastCheck =
+        document.getElementById("lastCheck");
 
-      statusText.textContent = "🟢 ONLINE";
-      statusText.style.color = "#00ff66";
 
-      statusDot.className = "dot online";
+    statusText.textContent =
+        "⏳ در حال بررسی...";
 
-      if (data.players) {
-        players.textContent =
-          " • " + data.players.online +
-          " / " + data.players.max +
-          " Players";
-      }
+    statusText.style.color =
+        "#ffaa00";
 
-    } else {
+    statusDot.className =
+        "dot error";
 
-      statusText.textContent = "🔴 OFFLINE";
-      statusText.style.color = "#ff3333";
+    players.textContent =
+        "";
 
-      statusDot.className = "dot offline";
+
+    try{
+
+        const response =
+            await fetch(
+                "https://api.mcsrvstat.us/3/" +
+                SERVER_IP +
+                "?_=" +
+                Date.now()
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "API Error"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+            مهم‌ترین قسمت:
+
+            وقتی Aternos خاموش است،
+            API ممکن است online:true بدهد،
+            ولی MOTD شامل "offline" باشد.
+
+            بنابراین اینجا MOTD را هم بررسی می‌کنیم.
+        */
+
+
+        let isOffline =
+            false;
+
+
+        if(
+            data.motd &&
+            data.motd.clean
+        ){
+
+            const motd =
+                data.motd.clean
+                .join(" ")
+                .toLowerCase();
+
+
+            if(
+                motd.includes("server is offline") ||
+                motd.includes("this server is offline")
+            ){
+
+                isOffline = true;
+
+            }
+
+        }
+
+
+        /*
+            اگر API صراحتاً
+            آنلاین نبود هم OFFLINE
+        */
+
+        if(
+            data.online === false ||
+            isOffline
+        ){
+
+            statusText.textContent =
+                "🔴 OFFLINE";
+
+            statusText.style.color =
+                "#ff3333";
+
+            statusDot.className =
+                "dot offline";
+
+            players.textContent =
+                "👥 0 / " +
+                (
+                    data.players &&
+                    data.players.max
+                    ? data.players.max
+                    : "20"
+                );
+
+        }
+
+
+        /*
+            ONLINE واقعی
+        */
+
+        else if(
+            data.players &&
+            data.players.online !== undefined
+        ){
+
+            statusText.textContent =
+                "🟢 ONLINE";
+
+            statusText.style.color =
+                "#00ff66";
+
+            statusDot.className =
+                "dot online";
+
+
+            const online =
+                data.players.online;
+
+
+            const max =
+                data.players.max;
+
+
+            players.textContent =
+                "👥 " +
+                online +
+                " / " +
+                max;
+
+        }
+
+
+        /*
+            اگر جواب عجیب بود
+        */
+
+        else{
+
+            statusText.textContent =
+                "🟡 نامشخص";
+
+            statusText.style.color =
+                "#ffaa00";
+
+            statusDot.className =
+                "dot error";
+
+        }
+
+
+        /*
+            زمان آخرین بررسی
+        */
+
+        const now =
+            new Date();
+
+
+        lastCheck.textContent =
+            "آخرین بررسی: " +
+            now.toLocaleTimeString("fa-IR");
 
     }
 
-  } catch (error) {
 
-    statusText.textContent = "⚠️ خطا در بررسی";
-    statusText.style.color = "#ffaa00";
+    catch(error){
 
-    statusDot.className = "dot";
+        console.error(error);
 
-  }
+
+        statusText.textContent =
+            "🟡 خطا در بررسی";
+
+        statusText.style.color =
+            "#ffaa00";
+
+        statusDot.className =
+            "dot error";
+
+        players.textContent =
+            "";
+
+        lastCheck.textContent =
+            "اتصال به سرویس وضعیت ناموفق بود";
+
+    }
+
 }
 
-function copyIP() {
 
-  navigator.clipboard.writeText(SERVER_IP);
+/*
+    کپی IP
+*/
 
-  alert("IP سرور کپی شد! 🎮");
+function copyIP(){
+
+    navigator.clipboard
+        .writeText(SERVER_IP)
+        .then(()=>{
+
+            alert(
+                "✅ IP سرور کپی شد!"
+            );
+
+        });
 
 }
+
+
+/*
+    بررسی اول
+*/
 
 checkServer();
 
-setInterval(checkServer, 30000);
+
+/*
+    هر 30 ثانیه
+*/
+
+setInterval(
+    checkServer,
+    30000
+);
 
 </script>
 
